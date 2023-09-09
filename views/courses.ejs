@@ -1,0 +1,14 @@
+<%- include('layout', {body: body }) %>
+
+<body>
+    <div class="course-list">
+        <h1>Our courses</h1>
+        <% offeredCourses.forEach(course => { %>
+            <div class="course-item">
+                <img src="/public/images/course1.jpg" alt="Course 1" class="course-image">
+                <h5 class="course-title"><%= course.title %></h5>
+                <span class="course-cost">$<%= course.cost %></span>
+            </div>
+        <% }); %>
+    </div>
+</body>

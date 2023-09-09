@@ -71,5 +71,30 @@ footer {
     margin-bottom: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
+/* Align the course list to the left */
+.course-list {
+    text-align: left;
+}
 
-/* Add more specific styles as needed for different sections of your eatery website */
+/* Add styles for the course items */
+.course-item {
+    margin-bottom: 10px;
+}
+
+/* Style the course title */
+.course-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Style the course cost */
+.course-cost {
+    color: #007bff; /* Use a color of your choice */
+    font-weight: bold;
+}
+
+/* Add styles for images */
+.course-image {
+    max-width: 200px; /* Adjust the width as needed */
+    height: auto;
+}
