@@ -12,11 +12,13 @@ var courses = [
         cost: 400
     }
 ];
-exports.showCourses = (req, res) => {
-    const body = courses;
-    res.render("courses", {
-        offeredCourses: courses, body
-    });
+
+module.exports = {
+    showCourses: (req, res) => {
+        res.render("courses", {
+            offeredCourses: courses
+        });
+    }
 };
 
 exports.showSignUp = (req, res) => {
