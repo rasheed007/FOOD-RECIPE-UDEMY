@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 const mongoose = require("mongoose"),
 {Schema} = mongoose,
 Subscriber = require("./subscriber");
@@ -34,23 +36,23 @@ userSchema = new Schema({
 
 userSchema.pre("save", function (next) {
     let user = this;
-    if (user.subscribedAccount === undefined) { /** Add a quick conditional check for existing subscriber connections */
-        Subscriber.findOne({
-            email: user.email    /** Query for a single subscriber */
-        })
-        .then(subscriber => {
-            user.subscribedAccount = subscriber;
-            next();
-        })
-        .catch(error => {
-            console.log(`Error in connecting subscriber: ${error.message}`);
-            next(error); 
-        });
-    } else {
-        next(); /* Call next function if user already has an association */
-    }
+
+    bcrypt.hash(user.password, 10).then(hash => {
+        user.password = hash;
+        next();
+    })
+    .catch(error => {
+        console.log(`Error in hashing password: ${error.message}`);
+        next(error);
+    });    
 });
-userSchema.virtual("fullName").get(function() {
-    return `${this.name.first} ${this.name.last}`;
-});
-module.exports = mongoose.model("User", userSchema);
+
+userSchema.methods.passwordComparison = function(inputPasssword){
+    let user = this;
+    return bcrypt.compare(inputPassword, user.password)
+};
+
+// userSchema.virtual("fullName").get(function() {
+//     return `${this.name.first} ${this.name.last}`;
+// });
+// module.exports = mongoose.model("User", userSchema);

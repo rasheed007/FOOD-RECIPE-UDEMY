@@ -13,6 +13,7 @@ const user = require("./models/user");
 const expressSession = require("express-session"),
 cookieParser = require("cookie-parser"),
 connectFlash = require("connect-flash");
+const expressValidator = require("express-validator");
 
 
 // Set EJS as the view engine
@@ -20,6 +21,10 @@ app.set("view engine", "ejs");
 
 // Use express-ejs-layouts
 app.use(expressLayouts);
+
+express.json()
+express.urlencoded()
+router.use(expressValidator())
 
 app.use(express.static(__dirname + '/public'));
 
@@ -63,12 +68,15 @@ app.post("/contact", homeController.postedSignUpForm);
 
 app.get("/users", usersController.index, usersController.indexView);
 
+router.get("/users/login", userController.login);
+router.post("/users/login", userController.authenticate, usersController.redirectView);
 router.get("/users/new", usersController.new);
-router.post("/users/create", usersController.create, usersController.redirectView);
+router.post("/users/create", usersController.validate, usersController.create, usersController.redirectView);
 router.get("/users/:id", usersController.show, usersController.showView);
 router.get("/users/:id/edit", usersController.edit);
 router.put("/users/:id/update", userController.update, usersController.redirectView);
 router.delete("/users/:id/delete", userController.delete, usersController.redirectView)
+
 
 router.get("/subscribers", subscribersController.index, subscribersController.indexView);
 router.get("/subscribers/new", subscribersController.new);
